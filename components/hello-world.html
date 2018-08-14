@@ -1,0 +1,35 @@
+<template>
+  <style>
+    .coloured {
+      color: red;
+    }
+  </style>
+
+  <p>the first webcompnent is
+    <strong class="coloured">Hello World</strong>
+  </p>
+</template>
+<script>
+  (function () {
+    // Creates an object based in the HTML Element prototype
+    var element = Object.create(HTMLElement.prototype);
+
+    // get content of the template
+    var template = document.currentScript.ownerDocument.querySelector('template').content;
+
+    // callback of Element created
+    element.createdCallback = function() {
+      // Creates shadow root
+      var shadowRoot = this.createShadowRoot();
+
+      // add the template to DOM
+      var clone = document.importNode(template, true);
+      shadowRoot.appendChild(clone);
+    };
+
+    // register Element
+    document.registerElement('hello-world', {
+      prototype: element
+    });
+  }());
+</script>
